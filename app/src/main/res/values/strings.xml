@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PerfectAudioPlayer</string>
+    <string name="lets_go">Lets Go</string>
+    <string name="more">More</string>
+    <string name="my_player">My Player</string>
+    <string name="play_and_pause">play and pause</string>
+    <string name="previous">Previous</string>
+    <string name="playback">Playback</string>
+    <string name="playforward">PlayForward</string>
+    <string name="next">Next</string>
+    <string name="represent">Represent</string>
+    <string name="play">Play</string>
+    <string name="demon_slayer">Demon Slayer</string>
+</resources>

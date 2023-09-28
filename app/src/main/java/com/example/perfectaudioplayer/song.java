@@ -2,6 +2,8 @@ package com.example.perfectaudioplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.perfectaudioplayer.adapter.RecyclerViewAdapter;
+import com.example.perfectaudioplayer.songs.ListSong;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,12 +14,14 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class song extends AppCompatActivity {
     int i;
-    int[] arr;
-    int[] song;
+     List<Integer> arr;
+    List<Integer> song;
 
-    String[] name;
+    List<String> name;
 
     TextView txt1;
     Handler handler;
@@ -28,7 +32,21 @@ public class song extends AppCompatActivity {
     ImageButton img2;
 
     boolean f=false;
+
+    public void onBackPressed(){
+        if(player!=null)
+        {
+            player.release();
+            player=null;
+        }
+
+    }
     public void play(View view){
+        if(player==null)
+        {
+           //Will be used in future version.
+           //There is no use for this function for now.
+        }
         if(!f) {
             player.start();
             img1.setVisibility(View.GONE);
@@ -53,10 +71,10 @@ public class song extends AppCompatActivity {
         }
         if(i>0) {
             i--;
-            txt1.setText(name[i]);
+            txt1.setText(name.get(i));
             player.release();
-            player = MediaPlayer.create(this, song[i]);
-            img.setImageResource(arr[i]);
+            player = MediaPlayer.create(this, song.get(i));
+            img.setImageResource(arr.get(i));
             seek.setMax(player.getDuration());
         }
     }
@@ -70,12 +88,12 @@ public class song extends AppCompatActivity {
             f=false;
 
         }
-        if(i<arr.length) {
+        if(i<arr.size()) {
             i++;
-            txt1.setText(name[i]);
+            txt1.setText(name.get(i));
             player.release();
-            player = MediaPlayer.create(this, song[i]);
-            img.setImageResource(arr[i]);
+            player = MediaPlayer.create(this, song.get(i));
+            img.setImageResource(arr.get(i));
             seek.setMax(player.getDuration());
         }
     }
@@ -85,7 +103,8 @@ public class song extends AppCompatActivity {
         setContentView(R.layout.activity_song);
 
         Intent intent=getIntent();
-        i=intent.getIntExtra(MainActivity.id,0);
+        i=intent.getIntExtra(RecyclerViewAdapter.id,0);
+        ListSong songObj=new ListSong();
 
         img=findViewById(R.id.imageView);
         seek=findViewById(R.id.seekBar);
@@ -93,12 +112,12 @@ public class song extends AppCompatActivity {
         img2=findViewById(R.id.imageButton4);
         txt1=findViewById(R.id.Name);
 
-        arr=new int[]{R.drawable.yay,R.drawable.jjk2i,R.drawable.noragami};
-        song=new int[]{R.raw.yay,R.raw.jjk,R.raw.noragami};
-        name=new String[]{"Demon Slayer","Jujutsu kaizen","Noragami"};
+        arr=songObj.getImages();
+        song=songObj.giveSongs();
+        name=songObj.getTitle();
 
-        img.setImageResource(arr[i]);
-        player=MediaPlayer.create(this,song[i]);
+        img.setImageResource(arr.get(i));
+        player=MediaPlayer.create(this,song.get(i));
 
         seek.setMax(player.getDuration());
 
